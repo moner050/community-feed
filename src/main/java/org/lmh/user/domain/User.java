@@ -11,6 +11,10 @@ public class User {
     private final PositiveIntegerCounter followerCounter;
 
     public User(Long id, UserInfo userInfo) {
+        if(userInfo == null) {
+            throw new IllegalArgumentException();
+        }
+
         this.id = id;
         this.info = userInfo;
         this.followingCounter = new PositiveIntegerCounter();
@@ -58,5 +62,17 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getFollowingCounter() {
+        return followingCounter.getCount();
+    }
+
+    public int getFollowerCounter() {
+        return followerCounter.getCount();
     }
 }
