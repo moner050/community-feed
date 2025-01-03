@@ -2,6 +2,7 @@ package org.lmh.post.domain.comment;
 
 import org.lmh.common.domain.PositiveIntegerCounter;
 import org.lmh.post.domain.Post;
+import org.lmh.post.domain.content.CommentContent;
 import org.lmh.post.domain.content.Content;
 import org.lmh.user.domain.User;
 
@@ -12,6 +13,10 @@ public class Comment {
     private final User author;
     private final Content content;
     private final PositiveIntegerCounter likeCount;
+
+    public static Comment createComment(Post post, User author, String content) {
+        return new Comment(null, post, author, new CommentContent(content));
+    }
 
     public Comment(Long id, Post post, User author, Content content) {
         if(author == null) {
