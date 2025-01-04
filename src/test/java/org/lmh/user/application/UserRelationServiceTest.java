@@ -2,23 +2,18 @@ package org.lmh.user.application;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.lmh.fake.FakeObjectFactory;
 import org.lmh.user.application.dto.CreateUserRequestDto;
 import org.lmh.user.application.dto.FollowUserRequestDto;
-import org.lmh.user.application.interfaces.UserRelationRepository;
-import org.lmh.user.application.interfaces.UserRepository;
 import org.lmh.user.domain.User;
-import org.lmh.user.repository.FakeUserRelationRepository;
-import org.lmh.user.repository.FakeUserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserRelationServiceTest {
 
-    private final UserRepository userRepository = new FakeUserRepository();
-    private final UserService userService = new UserService(userRepository);
-    private final UserRelationRepository userRelationRepository = new FakeUserRelationRepository();
-    private final UserRelationService userRelationService = new UserRelationService(userService, userRelationRepository);
+    private final UserService userService = FakeObjectFactory.getUserService();
+    private final UserRelationService userRelationService = FakeObjectFactory.getUserRelationService();
 
     private User user1;
     private User user2;

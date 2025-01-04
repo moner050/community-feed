@@ -1,18 +1,16 @@
 package org.lmh.user.application;
 
 import org.junit.jupiter.api.Test;
+import org.lmh.fake.FakeObjectFactory;
 import org.lmh.user.application.dto.CreateUserRequestDto;
-import org.lmh.user.application.interfaces.UserRepository;
 import org.lmh.user.domain.User;
 import org.lmh.user.domain.UserInfo;
-import org.lmh.user.repository.FakeUserRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserServiceTest {
 
-    private final UserRepository userRepository = new FakeUserRepository();
-    private final UserService userService = new UserService(userRepository);
+    private final UserService userService = FakeObjectFactory.getUserService();
 
     @Test
     void givenUserInfoDto_whenCreateUser_thenCanFindUser() {
