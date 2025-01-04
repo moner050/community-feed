@@ -36,7 +36,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(Long id, UpdateCommentRequestDto dto) {
+    public Comment updateComment(UpdateCommentRequestDto dto) {
         Comment comment = getComment(dto.commentId());
         User user = userService.getUser(dto.userId());
 
