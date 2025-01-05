@@ -1,14 +1,21 @@
 package org.lmh.user.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.lmh.common.domain.PositiveIntegerCounter;
 
 import java.util.Objects;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class User {
-    private final Long id;
-    private final UserInfo info;
-    private final PositiveIntegerCounter followingCounter;
-    private final PositiveIntegerCounter followerCounter;
+
+    private Long id;
+    private UserInfo info;
+    private PositiveIntegerCounter followingCounter;
+    private PositiveIntegerCounter followerCounter;
 
     public User(Long id, UserInfo userInfo) {
         if(userInfo == null) {
@@ -64,19 +71,20 @@ public class User {
         return Objects.hashCode(id);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public int getFollowingCounter() {
+    public int followingCount() {
         return followingCounter.getCount();
     }
 
-    public int getFollowerCounter() {
+    public int followerCount() {
         return followerCounter.getCount();
     }
 
-    public UserInfo getInfo() {
-        return info;
+    public String getProfileImageUrl() {
+        return info.getProfileImageUrl();
     }
+
+    public String getName() {
+        return info.getName();
+    }
+
 }
