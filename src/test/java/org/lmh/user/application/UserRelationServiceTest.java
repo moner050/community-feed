@@ -35,8 +35,8 @@ class UserRelationServiceTest {
         userRelationService.follow(requestDto);
 
         // then
-        assertEquals(1, user1.getFollowingCounter());
-        assertEquals(1, user2.getFollowerCounter());
+        assertEquals(1, user1.followingCount());
+        assertEquals(1, user2.followerCount());
     }
 
     @Test
@@ -66,8 +66,8 @@ class UserRelationServiceTest {
         userRelationService.unfollow(requestDto);
 
         // then
-        assertEquals(0, user1.getFollowingCounter());
-        assertEquals(0, user2.getFollowerCounter());
+        assertEquals(0, user1.followingCount());
+        assertEquals(0, user2.followerCount());
     }
 
     @Test
