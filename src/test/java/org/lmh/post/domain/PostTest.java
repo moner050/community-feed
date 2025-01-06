@@ -29,7 +29,7 @@ class PostTest {
     @Test
     void givenPostCreated_whenLikeMySelf_thenThrowException() {
         // when & then
-        assertThrows(IllegalStateException.class, () -> post.like(user));
+        assertThrows(IllegalArgumentException.class, () -> post.like(user));
     }
 
 

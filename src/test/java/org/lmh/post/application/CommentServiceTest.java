@@ -45,7 +45,7 @@ class CommentServiceTest extends PostApplicationTestTemplate {
         commentService.likeComment(likeRequestDto);
 
         // then
-        assertEquals(comment.getId(), comment.getLikeCount());
+        assertEquals(1, comment.getLikeCount());
     }
 
     @Test
