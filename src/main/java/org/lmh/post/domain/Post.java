@@ -1,11 +1,17 @@
 package org.lmh.post.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.lmh.common.domain.PositiveIntegerCounter;
 import org.lmh.post.domain.content.Content;
 import org.lmh.post.domain.content.PostContent;
 import org.lmh.post.domain.content.PostPublicationState;
 import org.lmh.user.domain.User;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class Post {
 
     private final Long id;
@@ -65,14 +71,6 @@ public class Post {
 
     public String getContent() {
         return content.getContentText();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public User getAuthor() {
-        return author;
     }
 
     public Content getContentObject() {
