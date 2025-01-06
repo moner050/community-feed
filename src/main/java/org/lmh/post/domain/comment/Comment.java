@@ -1,11 +1,17 @@
 package org.lmh.post.domain.comment;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.lmh.common.domain.PositiveIntegerCounter;
 import org.lmh.post.domain.Post;
 import org.lmh.post.domain.content.CommentContent;
 import org.lmh.post.domain.content.Content;
 import org.lmh.user.domain.User;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class Comment {
 
     private final Long id;
@@ -67,17 +73,4 @@ public class Comment {
     public String getContent() {
         return content.getContentText();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
 }
