@@ -23,6 +23,6 @@ public class UserService {
     }
 
     public User getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(IllformedLocaleException::new);
+        return userRepository.findById(userId);
     }
 }
