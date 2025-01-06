@@ -3,7 +3,9 @@ package org.lmh.user.application;
 import org.lmh.user.application.dto.FollowUserRequestDto;
 import org.lmh.user.application.interfaces.UserRelationRepository;
 import org.lmh.user.domain.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserRelationService {
 
     private final UserService userService;
