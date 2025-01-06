@@ -27,6 +27,12 @@ dependencies {
     // mysql
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    // querydsl
+    implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+    annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+
     // lombok
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -40,4 +46,27 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+/**
+ * QueryDsl Build Option
+ */
+
+// QueryDsl Q 객체 저장 장소
+val queryDslDir = "${layout.projectDirectory}/build/generated/querydsl"
+
+sourceSets{
+    getByName("main").java.srcDirs(queryDslDir)
+}
+
+// JavaCompile Task 실행 시, 어디에 파일을 넣어 줄지
+tasks.withType<JavaCompile> {
+    options.generatedSourceOutputDirectory = file(queryDslDir)
+}
+
+// clean 실행 시, queryDsl 파일도 삭제
+tasks.named("clean") {
+    doLast {
+        file(queryDslDir).deleteRecursively()
+    }
 }
