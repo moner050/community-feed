@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.lmh.common.domain.PositiveIntegerCounter;
 import org.lmh.common.repository.entity.TimeBaseEntity;
 import org.lmh.user.domain.User;
@@ -14,6 +15,7 @@ import org.lmh.user.domain.UserInfo;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@DynamicUpdate
 public class UserEntity extends TimeBaseEntity {
 
     @Id
