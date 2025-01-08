@@ -5,7 +5,6 @@ import org.lmh.post.domain.Post;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class FakePostRepository implements PostRepository {
     private final Map<Long, Post> store = new HashMap<>();
@@ -23,7 +22,7 @@ public class FakePostRepository implements PostRepository {
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Post findById(Long id) {
+        return store.get(id);
     }
 }
