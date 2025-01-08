@@ -2,7 +2,9 @@ package org.lmh.post.application;
 
 import org.junit.jupiter.api.Test;
 import org.lmh.post.application.dto.LikeRequestDto;
+import org.lmh.post.application.dto.UpdatePostRequestDto;
 import org.lmh.post.domain.Post;
+import org.lmh.post.domain.content.PostPublicationState;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,7 +26,8 @@ class PostServiceTest extends PostApplicationTestTemplate{
         Post savedPost = postService.createPost(postRequestDto);
     
         // when
-        Post updatedPost = postService.updatePost(savedPost.getId(), postRequestDto);
+        UpdatePostRequestDto updatePostRequestDto = new UpdatePostRequestDto(user.getId(), "updated content", PostPublicationState.PUBLIC);
+        Post updatedPost = postService.updatePost(savedPost.getId(), updatePostRequestDto);
     
         // then
         assertEquals(savedPost.getId(), updatedPost.getId());
