@@ -23,7 +23,7 @@ public class PostEntity extends TimeBaseEntity {
     private Long id;
 
     // DDL 생성시, ForeignKey 생성 제한을 걸음.
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT) )
     private UserEntity author;
 
