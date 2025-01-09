@@ -6,6 +6,7 @@ import org.lmh.post.application.interfaces.PostRepository;
 import org.lmh.post.domain.Post;
 import org.lmh.post.repository.entity.post.PostEntity;
 import org.lmh.post.repository.jpa.JpaPostRepository;
+import org.lmh.post.repository.post_queue.UserPostQueueCommandRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public class PostRepositoryImpl implements PostRepository {
 
     private final JpaPostRepository jpaPostRepository;
+    private final UserPostQueueCommandRepository commandRepository;
 
     @Override
     @Transactional
@@ -26,6 +28,7 @@ public class PostRepositoryImpl implements PostRepository {
         }
 
         postEntity = jpaPostRepository.save(postEntity);
+        commandRepository.publishPost(postEntity);
         return postEntity.toPost();
     }
 
