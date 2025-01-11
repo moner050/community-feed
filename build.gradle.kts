@@ -42,6 +42,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.test {
