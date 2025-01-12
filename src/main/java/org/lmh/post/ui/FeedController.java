@@ -2,7 +2,7 @@ package org.lmh.post.ui;
 
 import lombok.RequiredArgsConstructor;
 import org.lmh.common.ui.Response;
-import org.lmh.post.repository.post_queue.UserPostQueueQueryRepositoryImpl;
+import org.lmh.post.repository.post_queue.UserPostQueueQueryRepository;
 import org.lmh.post.ui.dto.GetPostContentResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedController {
 
-    private final UserPostQueueQueryRepositoryImpl queueQueryRepository;
+    private final UserPostQueueQueryRepository queueQueryRepository;
 
     @GetMapping("/{userId}")
     public Response<List<GetPostContentResponseDto>> getPostFeed(@PathVariable Long userId, Long lastPostId) {
