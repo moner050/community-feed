@@ -3,9 +3,7 @@ package org.lmh.post.repository.post_queue;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.lmh.post.repository.entity.post.PostEntity;
-import org.lmh.post.repository.entity.post.UserPostQueueEntity;
 import org.lmh.post.repository.jpa.JpaPostRepository;
-import org.lmh.post.repository.jpa.JpaUserPostQueueRepository;
 import org.lmh.user.repository.entity.UserEntity;
 import org.lmh.user.repository.jpa.JpaUserRelationRepository;
 import org.springframework.stereotype.Repository;
@@ -18,7 +16,7 @@ public class UserPostQueueCommandRepositoryImpl implements UserPostQueueCommandR
 
     private final JpaPostRepository jpaPostRepository;
     private final JpaUserRelationRepository jpaUserRelationRepository;
-    private final JpaUserPostQueueRepository jpaUserPostQueueRepository;
+    private final UserQueueRedisRepository userQueueRedisRepository;
 
     @Override
     @Transactional
@@ -27,32 +25,22 @@ public class UserPostQueueCommandRepositoryImpl implements UserPostQueueCommandR
         UserEntity userEntity = postEntity.getAuthor();
         // 작성자 팔로워들 id 리스트
         List<Long> followerIds = jpaUserRelationRepository.findFollowers(userEntity.getId());
-
-        // 엔티티로 변환해 저장
-        List<UserPostQueueEntity> userPostQueueEntityList = followerIds.stream()
-                .map(userId -> new UserPostQueueEntity(userId, postEntity.getId(), userEntity.getId()))
-                .toList();
-
-        jpaUserPostQueueRepository.saveAll(userPostQueueEntityList);
+        // 팔로워들에게 게시글 넣어주기
+        userQueueRedisRepository.publishPostToFollowingUserList(postEntity, followerIds);
     }
 
     @Override
     @Transactional
     public void saveFollowPost(Long userId, Long targetId) {
         // 작성자 게시글들 불러오기
-        List<Long> postIdList = jpaPostRepository.findAllPostIdsByAuthorId(targetId);
-
-        // 엔티티로 변환해 저장
-        List<UserPostQueueEntity> userPostQueueEntityList = postIdList.stream()
-                .map(postId -> new UserPostQueueEntity(userId, postId, targetId))
-                .toList();
-
-        jpaUserPostQueueRepository.saveAll(userPostQueueEntityList);
+        List<PostEntity> postEntities = jpaPostRepository.findAllPostIdsByAuthorId(targetId);
+        // 팔로우한 작성자 게시글을 유저에게 넣어주기
+        userQueueRedisRepository.publishPostListToFollowerUser(postEntities, userId);
     }
 
     @Override
     @Transactional
     public void deleteUnFollowPost(Long userId, Long targetId) {
-        jpaUserPostQueueRepository.deleteAllByUserIdAndAuthorId(userId, targetId);
+        userQueueRedisRepository.deleteDeleteFeed(userId, targetId);
     }
 }
