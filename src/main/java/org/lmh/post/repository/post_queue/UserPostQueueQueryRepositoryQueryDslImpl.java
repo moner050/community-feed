@@ -1,21 +1,8 @@
 package org.lmh.post.repository.post_queue;
 
-import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-import org.lmh.post.repository.entity.like.QLikeEntity;
-import org.lmh.post.repository.entity.post.QPostEntity;
-import org.lmh.post.repository.entity.post.QUserPostQueueEntity;
-import org.lmh.post.ui.dto.GetPostContentResponseDto;
-import org.lmh.user.repository.entity.QUserEntity;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 //@Repository
 //@RequiredArgsConstructor
-public class UserPostQueueQueryRepositoryImpl {
+public class UserPostQueueQueryRepositoryQueryDslImpl {
 //public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepository{
 
     /*
