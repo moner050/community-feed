@@ -13,10 +13,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-@RequiredArgsConstructor
-public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepository{
+//@Repository
+//@RequiredArgsConstructor
+public class UserPostQueueQueryRepositoryImpl {
+//public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepository{
 
+    /*
     private final JPAQueryFactory queryFactory;
     private static final QUserPostQueueEntity userPostQueueEntity = QUserPostQueueEntity.userPostQueueEntity;
     private static final QPostEntity postEntity = QPostEntity.postEntity;
@@ -71,5 +73,6 @@ public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepos
                 .and(likeEntity.id.targetType.eq("POST"))
                 .and(likeEntity.id.userId.eq(userId));
     }
+     */
 
 }
