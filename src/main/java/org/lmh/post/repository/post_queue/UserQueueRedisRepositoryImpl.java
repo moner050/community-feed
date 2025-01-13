@@ -5,8 +5,8 @@ import org.lmh.common.service.RedisService;
 import org.lmh.post.repository.entity.post.PostEntity;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
@@ -36,7 +36,8 @@ public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository{
         }
     }
 
-    public Set<PostEntity> getPostSetByUserId(Long userId) {
-        return redisService.getData(String.valueOf(userId), PostEntity.class);
+    @Override
+    public List<PostEntity> getPostListByUserId(Long userId) {
+        return new ArrayList<>(redisService.getData(String.valueOf(userId), PostEntity.class));
     }
 }
