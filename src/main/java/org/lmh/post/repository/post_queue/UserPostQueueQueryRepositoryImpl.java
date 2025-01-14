@@ -5,12 +5,14 @@ import org.lmh.post.repository.entity.like.LikeIdEntity;
 import org.lmh.post.repository.entity.post.PostEntity;
 import org.lmh.post.repository.jpa.JpaLikeRepository;
 import org.lmh.post.ui.dto.GetPostContentResponseDto;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Profile("!test")
 @RequiredArgsConstructor
 public class UserPostQueueQueryRepositoryImpl implements UserPostQueueQueryRepository{
 

@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.lmh.common.service.RedisService;
 import org.lmh.post.repository.entity.post.PostEntity;
 import org.lmh.post.repository.jpa.JpaPostRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Repository
+@Profile("!test")
 @RequiredArgsConstructor
 public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository{
 
