@@ -3,27 +3,36 @@ package org.lmh.post.repository.post_queue;
 import lombok.RequiredArgsConstructor;
 import org.lmh.common.service.RedisService;
 import org.lmh.post.repository.entity.post.PostEntity;
+import org.lmh.post.repository.jpa.JpaPostRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @RequiredArgsConstructor
 public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository{
 
-    private final RedisService<PostEntity> redisService;
+    private final RedisService redisService;
+    private final JpaPostRepository jpaPostRepository;
 
     @Override
     public void publishPostToFollowingUserList(PostEntity postEntity, List<Long> userIdList) {
         for (Long userId : userIdList) {
-            redisService.setData(String.valueOf(userId), postEntity);
+            redisService.setData(String.valueOf(userId), postEntity.getId());
         }
     }
 
     @Override
     public void publishPostListToFollowerUser(List<PostEntity> postEntityList, Long userId) {
-        redisService.setAllData(String.valueOf(userId), postEntityList);
+        List<Long> postIdList = new ArrayList<>();
+
+        for (PostEntity postEntity : postEntityList) {
+            postIdList.add(postEntity.getId());
+        }
+
+        redisService.setAllData(String.valueOf(userId), postIdList);
     }
 
     @Override
@@ -38,6 +47,8 @@ public class UserQueueRedisRepositoryImpl implements UserQueueRedisRepository{
 
     @Override
     public List<PostEntity> getPostListByUserId(Long userId) {
-        return new ArrayList<>(redisService.getData(String.valueOf(userId), PostEntity.class));
+        List<Long> postPKList = redisService.getData(String.valueOf(userId)).stream().toList();
+
+        return jpaPostRepository.findAllByIdList(postPKList);
     }
 }
