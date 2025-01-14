@@ -14,58 +14,44 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RedisServiceImpl<T> implements RedisService<T> {
+public class RedisServiceImpl implements RedisService {
 
-    private final RedisTemplate<String, T> redisTemplate;
-    private final ObjectMapper mapper;
+    private final RedisTemplate<String, Long> redisTemplate;
 
     @Override
-    public Set<T> getData(String key, Class<T> clazz) {
-        String jsonData = (String) redisTemplate.opsForValue().get(key);
-
-        try {
-            if (StringUtils.hasText(jsonData)) {
-                return Set.of(mapper.readValue(jsonData, clazz));
-            }
-            return Set.of();
-        }
-        catch (JsonProcessingException e) {
-            throw new IllegalArgumentException();
-        }
+    public Set<Long> getData(String key) {
+        return redisTemplate.opsForSet().members(key);
     }
 
     @Override
-    public void setData(String key, T value) {
+    public void setData(String key, Long value) {
         redisTemplate.opsForSet().add(key, value);
     }
 
     @Override
-    public void setAllData(String key, List<T> values) {
-        for (T value : values) {
+    public void setAllData(String key, List<Long> values) {
+        for (Long value : values) {
             redisTemplate.opsForSet().add(key, value);
         }
     }
 
     @Override
-    public void deleteValue(String key, T value) {
+    public void deleteValue(String key, Long value) {
         redisTemplate.opsForSet().remove(key, value);
     }
 
     @Override
     public void deleteValueByTargetId(String key, String targetId) {
-        Set<T> values = redisTemplate.opsForSet().members(key);
+        Set<Long> values = redisTemplate.opsForSet().members(key);
 
         if(values == null || values.isEmpty()) {
             return;
         }
 
         // 삭제할 대상 선택
-        Set<T> targets = values.stream()
+        Set<Long> targets = values.stream()
                 .filter(value -> {
-                    if(value instanceof PostEntity) {
-                        return targetId.equals(((PostEntity) value).getId());
-                    }
-                    return false;
+                    return String.valueOf(value).equals(targetId);
                 })
                 .collect(Collectors.toSet());
 
@@ -85,7 +71,7 @@ public class RedisServiceImpl<T> implements RedisService<T> {
     }
 
     @Override
-    public boolean containsValue(String key, T value) {
+    public boolean containsValue(String key, Long value) {
         return Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, value));
     }
 }
