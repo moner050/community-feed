@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
 
+    @Query("SELECT p FROM PostEntity p WHERE p.id in :postIds")
+    List<PostEntity> findAllByIdList(List<Long> postIds);
+
     @Query("SELECT p FROM PostEntity p WHERE p.author.id = :authorId")
     List<PostEntity> findAllPostIdsByAuthorId(@Param("authorId") Long authorId);
 
