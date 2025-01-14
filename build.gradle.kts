@@ -49,8 +49,6 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     testCompileOnly ("org.projectlombok:lombok")
     testAnnotationProcessor ("org.projectlombok:lombok")
-
-    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3")
 }
 
 tasks.test {
