@@ -9,4 +9,5 @@ public interface UserQueueRedisRepository {
     void publishPostToFollowingUserList(PostEntity postEntity, List<Long> userIdList);
     void publishPostListToFollowerUser(List<PostEntity> postEntityList, Long userId);
     void deleteDeleteFeed(Long userId, Long authorId);
+    List<PostEntity> getPostListByUserId(Long userId);
 }
