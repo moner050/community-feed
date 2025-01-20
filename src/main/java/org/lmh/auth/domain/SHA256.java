@@ -1,0 +1,28 @@
+package org.lmh.auth.domain;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class SHA256 {
+
+    private SHA256() {}
+
+    public static String encrypt(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(text.getBytes());
+            return bytesToHex(md.digest());
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("암호화에 실패하였습니다.");
+        }
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+}
