@@ -28,6 +28,10 @@ public class User {
         this.followerCounter = new PositiveIntegerCounter();
     }
 
+    public User(String name, String profileImageUrl) {
+        this(null, new UserInfo(name, profileImageUrl));
+    }
+
     public void follow(User targetUser) {
         if(targetUser.equals(this)) {
             throw new IllegalArgumentException("팔로워가 자기 자신입니다.");
