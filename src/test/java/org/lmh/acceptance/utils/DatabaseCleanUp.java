@@ -33,7 +33,7 @@ public class DatabaseCleanUp implements InitializingBean {
                 .toList();
 
         // GenerationType.IDENTITY 설정 안된 Entity 들 PK 값 관리를 위해 테이블 명칭 넣어줌.
-        notGeneratedIdTableNames = List.of("community_user_relation", "community_like");
+        notGeneratedIdTableNames = List.of("community_user_auth", "community_user_relation", "community_like");
     }
 
     @Transactional
