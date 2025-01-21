@@ -10,10 +10,11 @@ import org.lmh.post.ui.dto.GetPostContentResponseDto;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.lmh.acceptance.steps.FeedAcceptanceSteps.requestCreatePost;
-import static org.lmh.acceptance.steps.FeedAcceptanceSteps.requestFeed;
+import static org.lmh.acceptance.steps.FeedAcceptanceSteps.*;
 
 public class FeedAcceptanceTest extends AcceptanceTestTemplate {
+
+    private String token;
 
     /**
      * user1 -> follow -> user2
@@ -22,6 +23,7 @@ public class FeedAcceptanceTest extends AcceptanceTestTemplate {
     @BeforeEach
     void setUp() {
         super.init();
+        this.token = login("user1@test.com");
     }
 
     /**
@@ -35,10 +37,21 @@ public class FeedAcceptanceTest extends AcceptanceTestTemplate {
         Long createPostId = requestCreatePost(dto);
 
         // when
-        List<GetPostContentResponseDto> result = requestFeed(1L);
+        List<GetPostContentResponseDto> result = requestFeed(token);
 
         // then
         assertEquals(1, result.size());
         assertEquals(createPostId, result.get(0).getId());
+    }
+
+    @Test
+    void givenUserHasFollowerAndCreatePost_whenFollowerUserRequestFeedWithInvalidToken_thenThrowError() {
+        // given
+
+        // when
+        Integer code = requestFeedCode("abc");
+
+        // then
+        assertEquals(400, code);
     }
 }
