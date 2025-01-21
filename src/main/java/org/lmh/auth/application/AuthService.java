@@ -2,9 +2,12 @@ package org.lmh.auth.application;
 
 import lombok.RequiredArgsConstructor;
 import org.lmh.auth.application.dto.CreateUserAuthRequestDto;
+import org.lmh.auth.application.dto.LoginRequestDto;
+import org.lmh.auth.application.dto.UserAccessTokenResponseDto;
 import org.lmh.auth.application.interfaces.EmailVerificationRepository;
 import org.lmh.auth.application.interfaces.UserAuthRepository;
 import org.lmh.auth.domain.Email;
+import org.lmh.auth.domain.TokenProvider;
 import org.lmh.auth.domain.UserAuth;
 import org.lmh.user.domain.User;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ public class AuthService {
 
     private final UserAuthRepository userAuthRepository;
     private final EmailVerificationRepository verificationRepository;
+    private final TokenProvider tokenProvider;
 
     public Long registerUser(CreateUserAuthRequestDto dto) {
         Email email = Email.createEmail(dto.email());
@@ -30,4 +34,10 @@ public class AuthService {
         return userAuth.getUserId();
     }
 
+    public UserAccessTokenResponseDto login(LoginRequestDto dto) {
+        UserAuth userAuth = userAuthRepository.loginUser(dto.email(), dto.password());
+        String token = tokenProvider.createToken(userAuth.getUserId(), userAuth.getUserRole());
+
+        return new UserAccessTokenResponseDto(token);
+    }
 }
