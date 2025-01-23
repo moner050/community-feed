@@ -3,3 +3,4 @@ spring:
     import:
       - classpath:application-local.yml
       - classpath:application-redis-local.yml
+      - classpath:application-email-local.yml
