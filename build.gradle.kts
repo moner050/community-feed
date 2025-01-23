@@ -24,6 +24,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    // 이메일
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
+
     // Redis
     implementation ("org.springframework.boot:spring-boot-starter-data-redis")
 
