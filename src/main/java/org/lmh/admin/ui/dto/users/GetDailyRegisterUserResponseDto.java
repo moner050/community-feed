@@ -1,4 +1,4 @@
-package org.lmh.admin.ui.dto;
+package org.lmh.admin.ui.dto.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
