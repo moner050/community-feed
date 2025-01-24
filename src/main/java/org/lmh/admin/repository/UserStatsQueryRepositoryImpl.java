@@ -3,9 +3,9 @@ package org.lmh.admin.repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.lmh.admin.ui.dto.GetDailyRegisterUserResponseDto;
+import org.lmh.admin.ui.dto.users.GetDailyRegisterUserResponseDto;
 import org.lmh.admin.ui.query.UserStatsQueryRepository;
-import org.lmh.common.TimeCalculator;
+import org.lmh.common.utils.TimeCalculator;
 import org.lmh.user.repository.entity.QUserEntity;
 import org.springframework.stereotype.Repository;
 
