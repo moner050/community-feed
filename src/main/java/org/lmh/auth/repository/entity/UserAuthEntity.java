@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.lmh.auth.domain.UserAuth;
 import org.lmh.common.repository.entity.TimeBaseEntity;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "community_user_auth")
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class UserAuthEntity extends TimeBaseEntity {
     private String password;
     private String role;
     private Long userId;
+    private LocalDateTime lastLoginDt;
 
     public UserAuthEntity(UserAuth userAuth, Long userId) {
         this.email = userAuth.getEmail();
@@ -31,5 +34,9 @@ public class UserAuthEntity extends TimeBaseEntity {
 
     public UserAuth toUserAuth() {
         return new UserAuth(email, password, role, userId);
+    }
+
+    public void updateLastLoginAt() {
+        lastLoginDt = LocalDateTime.now();
     }
 }
