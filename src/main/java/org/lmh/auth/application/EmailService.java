@@ -19,7 +19,7 @@ public class EmailService {
         Email email = Email.createEmail(dto.email());
         String token = RandomTokenGenerator.generateToken();
 
-        emailSendRepository.sendEmail(email, token);
+        emailSendRepository.sendVerifyEmail(email, token);
         emailVerificationRepository.createEmailVerification(email, token);
     }
 
