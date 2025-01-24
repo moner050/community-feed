@@ -1,5 +1,6 @@
 package org.lmh.auth.repository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.lmh.auth.application.interfaces.UserAuthRepository;
 import org.lmh.auth.domain.UserAuth;
@@ -17,6 +18,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public UserAuth registerUser(UserAuth auth, User user) {
         User savedUser = userRepository.save(user);
         UserAuthEntity userAuthEntity = new UserAuthEntity(auth, savedUser.getId());
@@ -26,6 +28,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
     }
 
     @Override
+    @Transactional
     public UserAuth loginUser(String email, String password) {
         UserAuthEntity entity = jpaUserAuthRepository.findById(email).orElseThrow();
         UserAuth userAuth = entity.toUserAuth();
@@ -34,6 +37,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
             throw new IllegalArgumentException("옳지 않은 비밀번호 입니다.");
         }
 
+        entity.updateLastLoginAt();
         return userAuth;
     }
 }
