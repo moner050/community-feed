@@ -9,6 +9,9 @@ import org.lmh.common.domain.PositiveIntegerCounter;
 import org.lmh.common.repository.entity.TimeBaseEntity;
 import org.lmh.user.domain.User;
 import org.lmh.user.domain.UserInfo;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "community_user")
@@ -25,6 +28,10 @@ public class UserEntity extends TimeBaseEntity {
     private String profileImageUrl;
     private Integer followerCount;
     private Integer followingCount;
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDate regDate;
 
     public UserEntity(User user) {
         this.id = user.getId();
