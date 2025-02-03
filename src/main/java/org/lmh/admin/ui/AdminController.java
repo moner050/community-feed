@@ -2,6 +2,8 @@ package org.lmh.admin.ui;
 
 import lombok.RequiredArgsConstructor;
 import org.lmh.admin.ui.dto.GetTableListResponse;
+import org.lmh.admin.ui.dto.post.GetPostTableRequestDto;
+import org.lmh.admin.ui.dto.post.GetPostTableResponseDto;
 import org.lmh.admin.ui.dto.users.GetUserTableRequestDto;
 import org.lmh.admin.ui.dto.users.GetUserTableResponseDto;
 import org.lmh.admin.ui.query.AdminTableQueryRepository;
@@ -35,6 +37,18 @@ public class AdminController {
         mav.addObject("requestDto", dto);
         mav.addObject("userList", result.getTableData());
         mav.addObject("totalCount", result.getTotalCount());
+        return mav;
+    }
+
+    @GetMapping("/posts")
+    public ModelAndView posts(GetPostTableRequestDto dto) {
+        ModelAndView mav = new ModelAndView("posts");
+        GetTableListResponse<GetPostTableResponseDto> result = adminTableQueryRepository.getPostTableData(dto);
+
+        mav.addObject("requestDto", dto);
+        mav.addObject("postList", result.getTableData());
+        mav.addObject("totalCount", result.getTotalCount());
+
         return mav;
     }
 }
