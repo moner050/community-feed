@@ -51,4 +51,9 @@ public class AdminController {
 
         return mav;
     }
+
+    @GetMapping("/login")
+    public ModelAndView login() {
+        return new ModelAndView("login");
+    }
 }
