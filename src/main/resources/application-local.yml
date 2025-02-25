@@ -19,3 +19,6 @@ spring:
     open-in-view: false
 
 secret-key: dGhpc2lzc2VjcmVjdGtleXllYWhoaGh0aGlzaXNzZWNyZWN0a2V5eWVhaGhoaHRoaXNpc3NlY3JlY3RrZXl5ZWFoaGhodGhpc2lzc2VjcmVjdGtleXllYWhoaGh0aGlzaXNzZWNyZWN0a2V5eWVhaGhoaA==
+
+fcm:
+  certification: firebase-admin-sdk.json
