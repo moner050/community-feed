@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.lmh.message.application.interfaces.MessageRepository;
 import org.lmh.post.application.interfaces.LikeRepository;
 import org.lmh.post.domain.Post;
 import org.lmh.post.domain.comment.Comment;
@@ -25,6 +26,7 @@ public class LikeRepositoryImpl implements LikeRepository {
     private final JpaLikeRepository jpaLikeRepository;
     private final JpaPostRepository jpaPostRepository;
     private final JpaCommentRepository jpaCommentRepository;
+    private final MessageRepository messageRepository;
 
     @Override
     public boolean checkLike(Post post, User user) {
@@ -38,6 +40,7 @@ public class LikeRepositoryImpl implements LikeRepository {
         LikeEntity likeEntity = new LikeEntity(post, user);
         entityManager.persist(likeEntity);
         jpaPostRepository.updateLikeCount(post.getId(), 1);
+        messageRepository.sendLikeMessage(user, post.getAuthor());
     }
 
     @Override
