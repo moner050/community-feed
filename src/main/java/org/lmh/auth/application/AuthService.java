@@ -35,7 +35,7 @@ public class AuthService {
     }
 
     public UserAccessTokenResponseDto login(LoginRequestDto dto) {
-        UserAuth userAuth = userAuthRepository.loginUser(dto.email(), dto.password());
+        UserAuth userAuth = userAuthRepository.loginUser(dto.email(), dto.password(), dto.fcmToken());
         String token = tokenProvider.createToken(userAuth.getUserId(), userAuth.getUserRole());
 
         return new UserAccessTokenResponseDto(token);
