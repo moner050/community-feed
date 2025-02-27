@@ -16,7 +16,7 @@ import java.io.InputStream;
 @Component
 public class FcmConfig {
 
-    @Value("{fcm.certification}")
+    @Value("${fcm.certification}")
     private String fcmApplicationCredentials;
 
     @PostConstruct
