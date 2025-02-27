@@ -6,6 +6,8 @@ import org.lmh.auth.application.interfaces.UserAuthRepository;
 import org.lmh.auth.domain.UserAuth;
 import org.lmh.auth.repository.entity.UserAuthEntity;
 import org.lmh.auth.repository.jpa.JpaUserAuthRepository;
+import org.lmh.message.repository.JpaFcmTokenRepository;
+import org.lmh.message.repository.entity.FcmTokenEntity;
 import org.lmh.user.application.interfaces.UserRepository;
 import org.lmh.user.domain.User;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
 
     private final JpaUserAuthRepository jpaUserAuthRepository;
     private final UserRepository userRepository;
+    private final JpaFcmTokenRepository jpaFcmTokenRepository;
 
     @Override
     @Transactional
@@ -29,7 +32,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
 
     @Override
     @Transactional
-    public UserAuth loginUser(String email, String password) {
+    public UserAuth loginUser(String email, String password, String fcmToken) {
         UserAuthEntity entity = jpaUserAuthRepository.findById(email).orElseThrow();
         UserAuth userAuth = entity.toUserAuth();
 
@@ -38,6 +41,7 @@ public class UserAuthRepositoryImpl implements UserAuthRepository {
         }
 
         entity.updateLastLoginAt();
+        jpaFcmTokenRepository.save(new FcmTokenEntity(userAuth.getUserId(), fcmToken));
         return userAuth;
     }
 }
